@@ -1,78 +1,162 @@
-# customer-app
+Aquí tienes la documentación mejorada con un enfoque más profesional, estructurado y detallado:
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+---
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+# **Gestión de Clientes - API RESTful**
 
-## Running the application in dev mode
+## **Descripción**
+Este proyecto proporciona una API RESTful para la gestión eficiente de clientes, permitiendo realizar operaciones CRUD (**Crear, Leer, Actualizar y Eliminar**) de manera rápida, segura y escalable. 
 
-You can run your application in dev mode that enables live coding using:
+La API está diseñada para garantizar la integridad y disponibilidad de la información mediante el uso de **PostgreSQL** como base de datos y **Hibernate ORM con Panache** para el acceso a datos de manera eficiente. Además, se facilita el despliegue en entornos locales o de producción a través de **Docker y Docker Compose**.
 
-```shell script
+---
+
+## **Requisitos Previos**
+Antes de ejecutar la aplicación, asegúrate de contar con las siguientes herramientas instaladas:
+
+- **Java 17+**
+- **Maven** (versión 3.8 o superior)
+- **Docker y Docker Compose** (si deseas ejecutarlo en contenedores)
+
+---
+
+## **Instalación y Uso**
+
+### **1. Clonar el repositorio**  
+```bash
+git clone https://github.com/empresa/gestion-clientes.git
+cd customer-crud-prueba-tecnica
+```
+
+### **2. Configurar las variables de entorno**
+Edita el archivo `application.properties` para definir la configuración de la base de datos:
+
+```properties
+quarkus.datasource.db-kind=postgresql
+quarkus.datasource.username=usuario
+quarkus.datasource.password=clave
+quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/basededatos
+```
+
+### **3. Ejecutar la aplicación en modo desarrollo**
+```bash
 ./mvnw quarkus:dev
 ```
+Este comando iniciará la aplicación en modo desarrollo con Quarkus.
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+### **4. Acceder a la documentación de la API (Swagger)**
+Una vez iniciada la aplicación, puedes visualizar la documentación y probar los endpoints desde la interfaz Swagger UI:
 
-## Packaging and running the application
-
-The application can be packaged using:
-
-```shell script
-./mvnw package
+```bash
+http://localhost:8080/q/swagger-ui/
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+---
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+## **Ejecución con Docker**
+Para levantar el entorno completo con Docker, ejecuta:
 
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+```bash
+docker-compose up -d
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+Esto iniciará la base de datos PostgreSQL y cualquier otro servicio necesario.
 
-## Creating a native executable
+Si deseas ejecutar la aplicación dentro de un contenedor Docker, primero asegúrate de construir la imagen:
 
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
+```bash
+docker build -t gestion-clientes .
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+Luego, ejecuta el contenedor:
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+```bash
+docker run -p 8080:8080 --env-file .env gestion-clientes
 ```
 
-You can then execute your native executable with: `./target/customer-app-1.0.0-SNAPSHOT-runner`
+---
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+## **Estructura del Proyecto**
+El proyecto sigue una arquitectura modular y organizada:
 
-## Related Guides
+```
+customer-crud-prueba-tecnica/
+│── src/
+│   ├── main/
+│   │   ├── docker/            # Configuración para Docker
+│   │   ├── java/org/acme/
+│   │   │   ├── dto/           # Data Transfer Objects
+│   │   │   ├── entity/        # Entidades JPA
+│   │   │   ├── exception/     # Manejo de excepciones
+│   │   │   ├── mapper/        # Mapeo de entidades y DTOs
+│   │   │   ├── repository/    # Acceso a la base de datos
+│   │   │   ├── resource/      # Controladores REST
+│   │   │   ├── service/       # Lógica de negocio
+│   │   ├── resources/
+│   │   │   ├── application.properties  # Configuración de Quarkus
+│── test/                     # Pruebas unitarias y de integración
+```
 
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
+---
 
-## Provided Code
+## **Endpoints Disponibles**
+La API expone los siguientes endpoints para la gestión de clientes:
 
-### Hibernate ORM
+| Método  | Endpoint                                       | Descripción                          |
+|---------|-----------------------------------------------|--------------------------------------|
+| **GET** | `/api/customers`                             | Obtener la lista de todos los clientes |
+| **GET** | `/api/customers/{id}`                        | Obtener los detalles de un cliente por su ID |
+| **POST** | `/api/customers`                            | Crear un nuevo cliente |
+| **PUT** | `/api/customers/{id}`                        | Actualizar la información de un cliente existente |
+| **DELETE** | `/api/customers/{id}`                    | Eliminar un cliente |
+| **GET** | `/api/customers/getCustomersByCountry/{country}` | Obtener clientes filtrados por país |
 
-Create your first JPA entity
+#### **Ejemplo de petición con `curl`**
+```bash
+curl -X GET http://localhost:8080/api/customers
+```
 
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
+#### **Ejemplo de petición con `Postman`**
+1. Abre Postman y selecciona el método **GET**.
+2. Introduce la URL: `http://localhost:8080/api/customers`
+3. Haz clic en "Enviar" para ver los datos.
 
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
+---
 
+## **Pruebas Unitarias**
+El proyecto incluye pruebas unitarias utilizando **JUnit 5 y Mockito**. Para ejecutarlas:
 
-### REST
+```bash
+./mvnw test
+```
 
-Easily start your REST Web Services
+---
 
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+## **Stack Tecnológico**
+El proyecto se basa en las siguientes tecnologías:
+
+- **Quarkus** (framework ligero y optimizado para Java)
+- **Java 17+**
+- **Maven** (gestor de dependencias)
+- **Hibernate ORM con Panache** (manejo de persistencia)
+- **RESTEasy con Jackson** (implementación de JAX-RS para servicios REST)
+- **PostgreSQL** (base de datos relacional)
+- **Docker & Docker Compose** (para contenedorización)
+- **JUnit 5 y Mockito** (para pruebas unitarias)
+
+---
+
+## **Mejores Prácticas Implementadas**
+- **Arquitectura basada en capas**, separando la lógica de negocio, persistencia y controladores.
+- **Uso de DTOs y mapeo con MapStruct** para evitar exponer directamente entidades JPA.
+- **Validaciones con Bean Validation (`@Valid`)** en los controladores para asegurar datos correctos.
+- **Gestión centralizada de excepciones** para mejorar la respuesta de errores.
+- **Configuración de seguridad** con Quarkus y JWT para autenticación (opcional).
+- **Soporte para despliegue en Kubernetes** mediante configuraciones en `application.properties`.
+
+---
+
+## **Autores**
+- **[@oscarballard](https://github.com/oscarballard)**
+
+---

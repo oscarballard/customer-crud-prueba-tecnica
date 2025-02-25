@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 @Entity()
 @Table(name = "customers")
 public class CustomerEntity extends PanacheEntity {
@@ -36,8 +37,8 @@ public class CustomerEntity extends PanacheEntity {
     @Column(name = "phone", nullable = false)
     private String phone;
 
-    // @NotBlank(message = "CountryCode is required")
-    @Column(name = "countryCode", nullable = true)
+    @NotBlank(message = "Country code is required")
+    @Pattern(regexp = "^[A-Z]{2,3}$", message = "The country code must be a 2 or 3 letter ISO 3166 code")
     private String countryCode;
 
     @Column(nullable = true)
