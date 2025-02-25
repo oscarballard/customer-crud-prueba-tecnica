@@ -59,21 +59,6 @@ Para levantar el entorno completo con Docker, ejecuta:
 ```bash
 docker-compose up -d
 ```
-
-Esto iniciará la base de datos PostgreSQL y cualquier otro servicio necesario.
-
-Si deseas ejecutar la aplicación dentro de un contenedor Docker, primero asegúrate de construir la imagen:
-
-```bash
-docker build -t gestion-clientes .
-```
-
-Luego, ejecuta el contenedor:
-
-```bash
-docker run -p 8080:8080 --env-file .env gestion-clientes
-```
-
 ---
 
 ## **Estructura del Proyecto**
