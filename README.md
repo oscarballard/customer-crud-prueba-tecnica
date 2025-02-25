@@ -24,7 +24,7 @@ Antes de ejecutar la aplicación, asegúrate de contar con las siguientes herram
 
 ### **1. Clonar el repositorio**  
 ```bash
-git clone https://github.com/empresa/gestion-clientes.git
+git clone https://github.com/oscarballard/customer-crud-prueba-tecnica
 cd customer-crud-prueba-tecnica
 ```
 
