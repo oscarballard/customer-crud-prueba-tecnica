@@ -1,7 +1,3 @@
-Aquí tienes la documentación mejorada con un enfoque más profesional, estructurado y detallado:
-
----
-
 # **Gestión de Clientes - API RESTful**
 
 ## **Descripción**
@@ -18,6 +14,10 @@ Antes de ejecutar la aplicación, asegúrate de contar con las siguientes herram
 - **Maven** (versión 3.8 o superior)
 - **Docker y Docker Compose** (si deseas ejecutarlo en contenedores)
 
+---
+
+## **Diagrama de arquitectura**
+![Diagrama de arquitectura](src/assets/img/architectureDiagram.jpg)
 ---
 
 ## **Instalación y Uso**
