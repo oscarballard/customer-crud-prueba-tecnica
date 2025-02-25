@@ -1,15 +1,13 @@
 package org.acme.resource;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
 import org.acme.dto.CreateCustomerDto;
 import org.acme.dto.UpdateCustomerDto;
 import org.acme.entity.CustomerEntity;
 import org.acme.mapper.ICustomerMapper;
 import org.acme.service.CustomerService;
 import org.acme.service.ICountryService;
+import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -38,17 +36,24 @@ public class CustomerResource {
     @Inject 
     CustomerService customerService;
 
+
+    @Operation(summary = "Create a new customer", 
+           description = "Adds a new customer")
     @POST
     @Transactional
     public Response create(@Valid CreateCustomerDto createCustomerDto){
         return customerService.create(createCustomerDto);
     }
 
+    @Operation(summary = "Get all customers", 
+    description = "Retrieves a list of all registered customers.")
     @GET
     public Response getAll(){
         return Response.ok(customerService.listAll()).build();
     }
 
+    @Operation(summary = "Get customers by country", 
+           description = "Retrieves customers filtered by country.")
     @GET
     @Path("getCustomersByCountry/{countryCode}")
     public Response getCustomersByCountryCode(@PathParam("countryCode") String countryCode) {
@@ -61,6 +66,8 @@ public class CustomerResource {
         return Response.ok(customers).build();
     }
 
+    @Operation(summary = "Get customer by ID", 
+           description = "Fetches customer details by ID. Returns 404 if not found.")
     @GET
     @Path("/{id}")
     public Response getCustomerById(@PathParam("id") Long id) {
@@ -75,6 +82,9 @@ public class CustomerResource {
         return Response.ok(customer).build();
     }
 
+
+    @Operation(summary = "Update a customer", 
+           description = "Updates an existing customer by ID. Returns 404 if not found.")
     @PUT
     @Path("/{id}")
     @Transactional
@@ -82,6 +92,9 @@ public class CustomerResource {
         return customerService.update(id, updateCustomerDto);
     }
 
+
+    @Operation(summary = "Delete a customer", 
+           description = "Removes a customer by ID. Returns 404 if not found.")
     @DELETE
     @Path("{id}")
     @Transactional
