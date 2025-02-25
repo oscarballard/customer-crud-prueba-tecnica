@@ -132,12 +132,17 @@ El proyecto se basa en las siguientes tecnologías:
 ---
 
 ## **Mejores Prácticas Implementadas**
-- **Arquitectura basada en capas**, separando la lógica de negocio, persistencia y controladores.
-- **Uso de DTOs y mapeo con MapStruct** para evitar exponer directamente entidades JPA.
-- **Validaciones con Bean Validation (`@Valid`)** en los controladores para asegurar datos correctos.
-- **Gestión centralizada de excepciones** para mejorar la respuesta de errores.
-- **Configuración de seguridad** con Quarkus y JWT para autenticación (opcional).
-- **Soporte para despliegue en Kubernetes** mediante configuraciones en `application.properties`.
+Este proyecto sigue buenas prácticas de desarrollo para garantizar escalabilidad y mantenibilidad:
+
+✅ **Arquitectura basada en capas:** Separando la lógica de negocio, persistencia y controladores para mejorar la organización y facilitar el mantenimiento del código.  
+
+✅ **Uso de DTOs:** Implementación de Data Transfer Objects (DTO) para estructurar los datos y evitar exponer directamente entidades JPA.  
+
+✅ **Validaciones con Bean Validation (`@Valid`)** en los controladores para asegurar la integridad de los datos antes de persistirlos.  
+
+✅ **Gestión centralizada de excepciones:** Uso de un manejador de errores global para capturar y responder adecuadamente a errores en toda la API.  
+
+✅ **Despliegue con Docker:** Configuración lista para entornos locales y de producción utilizando **Docker y Docker Compose**.  
 
 ---
 
